@@ -4,7 +4,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <Authors>yimo</Authors>
     <Product>Qc.SampleauthSdk</Product>
-    <Description>一个基于 .NET Standard 2.0 构建的 Sampleauth SDK</Description>
+    <Description>一个基于 .NET Standard 2.0 构建的 简单登录中间件，方便的给swagger，私有资源添加拦截登录页，可配置不同语言</Description>
     <Company>QcCoding</Company>
     <PackageProjectUrl>https://github.com/QcCoding/Qc.SampleauthSdk</PackageProjectUrl>
     <RepositoryUrl>https://github.com/QcCoding/Qc.SampleauthSdk</RepositoryUrl>
