@@ -29,7 +29,7 @@ namespace Qc.SampleauthSdk
         {
             _options = _options ?? context.RequestServices.GetService<IOptions<SampleauthOptions>>()?.Value;
             var _sampleauthList = _options?.SampleauthList;
-            if (_sampleauthList?.Count > 0 == false)
+            if (_sampleauthList?.Count == 0)
             {
                 Console.WriteLine("SampleauthSdk no config users!!!");
                 //未配置用户则不启用
@@ -81,7 +81,7 @@ namespace Qc.SampleauthSdk
                         return;
                     }
 
-                    var existUser = _sampleauthList.FirstOrDefault(s => s.Username == username && s.Userpwd == userpwd);
+                    var existUser = _sampleauthList?.FirstOrDefault(s => s.Username == username && s.Userpwd == userpwd);
                     // 用户是否存在
                     if (existUser == null)
                     {
@@ -89,10 +89,7 @@ namespace Qc.SampleauthSdk
                         return;
                     }
                     string userkey = existUser.Userkey;
-                    context.Response.Cookies.Append(SAMPLE_ATUH_SDK_COOKIE, Utils.SecurityHelper.GetSignToken(username, userkey), new CookieOptions()
-                    {
-                        Expires = DateTime.Now.AddMonths(1)
-                    });
+                    context.Response.Cookies.Append(SAMPLE_ATUH_SDK_COOKIE, Utils.SecurityHelper.GetSignToken(username, userkey));
 
                     string returnUrl = context.Request.Query["returnUrl"];
                     returnUrl = string.IsNullOrEmpty(returnUrl) ? $"{_routePrefix}/" : returnUrl;
@@ -117,12 +114,13 @@ namespace Qc.SampleauthSdk
                 // 用户校验处理
                 if (_options.SignCheckBeforeHook(context))
                 {
+                    await _next(context);
                     return;
                 }
 
                 //身份验证
                 var encryptStr = context.Request.Cookies[SAMPLE_ATUH_SDK_COOKIE];
-                if (!string.IsNullOrEmpty(encryptStr) && _sampleauthList.Any(s => SecurityHelper.GetSignToken(s.Username, s.Userkey) == encryptStr))
+                if (!string.IsNullOrEmpty(encryptStr) && _sampleauthList?.Any(s => SecurityHelper.GetSignToken(s.Username, s.Userkey) == encryptStr) == true)
                 {
                     await _next(context);
                     return;
@@ -160,8 +158,16 @@ namespace Qc.SampleauthSdk
                 string pageContent = new StreamReader(resourceStream).ReadToEnd();
                 foreach (var item in pageConfig)
                 {
-                    pageContent = pageContent.Replace("{{" + item.Key + "}}", item.Value);
+                    if (item.Key.StartsWith("<tmp-"))
+                    {
+                        pageContent = pageContent.Replace(item.Key, item.Value);
+                    }
+                    else
+                    {
+                        pageContent = pageContent.Replace("{{" + item.Key + "}}", item.Value);
+                    }
                 }
+                pageContent = _options.RenderPageHook(context, pageContent);
                 // 缓存页面
                 if (!CachePageHtml.ContainsKey(page))
                 {

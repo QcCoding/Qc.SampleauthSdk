@@ -34,32 +34,32 @@ namespace Qc.SampleauthSdk.Sample
         {
             services.AddSampleauthSdk(Configuration.GetSection("SampleauthSetting").Bind);
             //
-            // 此处设置优先级较小
-            //            services.AddSampleauthSdk(opt =>
-            //            {
-            //                //默认不缺分大小写
-            //                //opt.RoutePrefix = "swagger";
-            //                opt.PageSetting = new Dictionary<string, string>()
-            //                {
-            //                    {SampleauthPageConst.LoginTextPageTitle,"测试项目-登录" },
-            //                    {SampleauthPageConst.LoginHeadStyle,@"
-            //body{background-color: #0c2725;}
-            //.login_input{1px solid #0c2725;}
-            //" },
-            //                    {SampleauthPageConst.LoginBodyScript,@"
-            //console.log('hello world')
-            //" }
-            //                };
-            //                opt.AutoRedirectLogin = true;
-            //                opt.SampleauthList = new List<SampleauthUserItem>()
-            //                {
-            //                     new SampleauthUserItem()
-            //                     {
-            //                          Username="yimo",
-            //                          Userpwd="123456"
-            //                     }
-            //                };
-            //            });
+            //此处设置优先级较小
+            services.AddSampleauthSdk(opt =>
+            {
+                //默认不缺分大小写
+                //opt.RoutePrefix = "swagger";
+                opt.PageSetting = new Dictionary<string, string>()
+                {
+                                {SampleauthPageConst.LoginTextPageTitle,"测试项目-登录" },
+                                {SampleauthPageConst.LoginHeadStyle,@"<style>
+            body{background-color: #0c2725;}
+            .login_input{1px solid #0c2725;}</style>
+            " },
+                                {SampleauthPageConst.LoginBodyScript,@"<script>
+            console.log('hello world')
+</script>
+            " }
+                };
+                opt.SampleauthList = new List<SampleauthUserItem>()
+                {
+                                 new SampleauthUserItem()
+                                 {
+                                      Username="yimo",
+                                      Userpwd="123456"
+                                 }
+                };
+            });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -105,7 +105,12 @@ namespace Qc.SampleauthSdk.Sample
                     Console.WriteLine("触发退出钩子");
                     return false;
                 };
-
+                opt.RenderPageHook = (httpContext, pageContent) =>
+                {
+                    pageContent += "<script>console.log('重新追加内容')</script>";
+                    pageContent = pageContent.Replace("required", "");
+                    return pageContent;
+                };
             });
             app.UseSampleauthSdk(opt =>
             {

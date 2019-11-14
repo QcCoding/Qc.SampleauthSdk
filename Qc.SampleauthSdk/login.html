@@ -18,14 +18,14 @@
         .text-center{text-align:center}
         #errorBlock,#captchaBlock{display:none;}
         #errormsgBlock{padding-left:5px;color:red;}
-        {{LoginHeadStyle}}
     </style>
+    <tmp-style></tmp-style>
 </head>
 <body>
     <div class="container">
         <h2 class="mg-b20 text-center">{{LoginTextPageTitle}}</h2>
         <div class="main_content">
-            <form method="post">
+            <form method="post" id="login-form">
                 <div class="form-group mg-t20">
                     <svg t="1538598813613" class="icon icon_font" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="874" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="50"><defs><style type="text/css"></style></defs><path d="M652.3 562.7C741.6 513.3 802 418.2 802 309c0-160.2-129.8-290-290-290S222 148.8 222 309c0 109.2 60.4 204.3 149.7 253.7C184 622.2 48 797.7 48 1005h58c0-224.2 181.8-406 406-406s406 181.8 406 406h58c0-207.3-136-382.8-323.7-442.3zM280 309c0-128.1 103.9-232 232-232s232 103.9 232 232-103.9 232-232 232-232-103.9-232-232z" fill="#707070" p-id="875"></path></svg>
                     <input type="text" class="login_input" name="username" placeholder="{{LoginPlaceholderUsername}}" required  autofocus/>
@@ -34,6 +34,7 @@
                     <svg t="1538599299144" class="icon icon_font" style="" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="1642" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="50"><defs><style type="text/css"></style></defs><path d="M510.230704 766.272147c-18.154475 0-21.73707-18.195408-21.73707-36.225039l0-86.948281c0-18.029632 3.582595-39.85266 21.73707-39.85266 18.149359 0 21.73707 21.823028 21.73707 39.85266l0 86.948281C531.967774 748.07674 528.380062 766.272147 510.230704 766.272147L510.230704 766.272147zM839.071174 961.907826 181.390233 961.907826c-54.391794 0-98.653881-43.886533-98.653881-97.81784L82.736353 505.428328c0-53.925167 47.047526-94.191242 101.43932-94.191242l652.110061 0c54.387701 0 101.438297 40.266076 101.438297 94.191242l0 358.661659C937.724031 918.021294 893.456828 961.907826 839.071174 961.907826L839.071174 961.907826zM198.666712 454.711226c-43.119053 0-70.076008 22.144346-72.456219 57.96518l0 347.792101c0 18.000979 39.845497 57.96518 57.96518 57.96518l652.110061 0c18.149359 0 57.96518-39.9642 57.96518-57.96518L894.250914 512.676405c0-39.393195-17.198707-57.96518-57.96518-57.96518L198.666712 454.711226 198.666712 454.711226zM740.417293 443.843714c-18.184151 0-20.061918-0.11461-20.061918-18.11559l0-115.930359c0-110.822015-123.419937-202.87864-217.369679-202.87864-96.153944 0-202.87864 81.97706-202.87864 202.87864l0 101.43932c0 18.000979-1.914606 32.606629-20.062941 32.606629-18.153452 0-23.411199-14.605649-23.411199-32.606629l0-101.43932c0-161.723312 117.873618-246.352781 246.352781-246.352781 125.255749 0 260.84382 93.828992 260.84382 246.352781l0 115.930359C763.829516 443.729104 758.600421 443.843714 740.417293 443.843714L740.417293 443.843714zM740.417293 443.843714" p-id="1643"></path></svg>
                     <input type="password" class="login_input" name="userpwd" placeholder="{{LoginPlaceholderUserpwd}}" required />
                 </div>
+                <tmp-captcha></tmp-captcha>
                 <div class="form-group mg-t20" id="errorBlock">
                     <p id="errormsgBlock"></p>
                 </div>
@@ -57,7 +58,7 @@
             document.getElementById('errormsgBlock').innerText = msg
             document.getElementById('errorBlock').style.display='block'
         }
-        {{LoginBodyScript}}
     </script>
+    <tmp-script></tmp-script>
 </body>
 </html>

@@ -32,10 +32,14 @@ namespace Qc.SampleauthSdk
         /// <summary>
         /// 登录自定义样式
         /// </summary>
-        public const string LoginHeadStyle = nameof(LoginHeadStyle);
+        public const string LoginHeadStyle = "<tmp-style></tmp-style>";
         /// <summary>
         /// 登录自定义脚本
         /// </summary>
-        public const string LoginBodyScript= nameof(LoginBodyScript);
+        public const string LoginBodyScript = "<tmp-script></tmp-script>";
+        /// <summary>
+        /// 验证码区域
+        /// </summary>
+        public const string LoginCaptchaBlock = "<tmp-captcha></tmp-captcha>";
     }
 }

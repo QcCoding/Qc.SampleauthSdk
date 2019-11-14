@@ -50,6 +50,7 @@ namespace Qc.SampleauthSdk
                 {SampleauthPageConst.LoginTextSubmitButton,"登  录" },
                 {SampleauthPageConst.LoginHeadStyle,string.Empty },
                 {SampleauthPageConst.LoginBodyScript,string.Empty },
+                {SampleauthPageConst.LoginCaptchaBlock,string.Empty },
             };
             if (PageSetting?.Count > 0)
             {
@@ -78,6 +79,11 @@ namespace Qc.SampleauthSdk
         /// </summary>
         /// <returns></returns>
         public Func<HttpContext, bool> SignOutBeforeHook = (HttpContext httpContext) => false;
+        /// <summary>
+        /// 页面渲染钩子
+        /// </summary>
+        /// <returns></returns>
+        public Func<HttpContext, string, string> RenderPageHook = (HttpContext httpContext, string pageContent) => pageContent;
     }
 
 }
