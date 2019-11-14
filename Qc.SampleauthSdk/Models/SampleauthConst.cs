@@ -30,6 +30,10 @@ namespace Qc.SampleauthSdk
         /// </summary>
         public const string LoginTextSubmitButton = nameof(LoginTextSubmitButton);
         /// <summary>
+        /// 登录页语言
+        /// </summary>
+        public const string LoginTextPageLang = nameof(LoginTextPageLang);
+        /// <summary>
         /// 登录自定义样式
         /// </summary>
         public const string LoginHeadStyle = "<tmp-style></tmp-style>";

@@ -48,6 +48,7 @@ namespace Qc.SampleauthSdk
                 {SampleauthPageConst.LoginPlaceholderUsername,"请输入用户名" },
                 {SampleauthPageConst.LoginPlaceholderUserpwd,"请输入密码" },
                 {SampleauthPageConst.LoginTextSubmitButton,"登  录" },
+                {SampleauthPageConst.LoginTextPageLang,"zh-cn" },
                 {SampleauthPageConst.LoginHeadStyle,string.Empty },
                 {SampleauthPageConst.LoginBodyScript,string.Empty },
                 {SampleauthPageConst.LoginCaptchaBlock,string.Empty },

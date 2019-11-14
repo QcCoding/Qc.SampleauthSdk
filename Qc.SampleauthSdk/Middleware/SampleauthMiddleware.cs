@@ -147,15 +147,16 @@ namespace Qc.SampleauthSdk
         {
             context.Response.ContentType = "text/html;charset=utf-8";
             context.Response.StatusCode = StatusCodes.Status200OK;
+            string pageContent = string.Empty;
             if (CachePageHtml.ContainsKey(page))
             {
-                await context.Response.WriteAsync(CachePageHtml[page]);
+                pageContent = CachePageHtml[page];
             }
             else
             {
                 var currentAssembly = typeof(SampleauthOptions).GetTypeInfo().Assembly;
                 var resourceStream = currentAssembly.GetManifestResourceStream($"{currentAssembly.GetName().Name}.{page}");
-                string pageContent = new StreamReader(resourceStream).ReadToEnd();
+                pageContent = new StreamReader(resourceStream).ReadToEnd();
                 foreach (var item in pageConfig)
                 {
                     if (item.Key.StartsWith("<tmp-"))
@@ -167,14 +168,14 @@ namespace Qc.SampleauthSdk
                         pageContent = pageContent.Replace("{{" + item.Key + "}}", item.Value);
                     }
                 }
-                pageContent = _options.RenderPageHook(context, pageContent);
                 // 缓存页面
                 if (!CachePageHtml.ContainsKey(page))
                 {
                     CachePageHtml.Add(page, pageContent);
                 }
-                await context.Response.WriteAsync(pageContent, Encoding.UTF8);
             }
+            pageContent = _options.RenderPageHook(context, pageContent);
+            await context.Response.WriteAsync(pageContent, Encoding.UTF8);
         }
         /// <summary>
         /// 从当前路径中获取添加参数后的Url
